@@ -1,6 +1,7 @@
 from django.urls import include, path
 from . import views
 
+app_name = 'votacao'
 urlpatterns = [
 
  # ex: votacao/

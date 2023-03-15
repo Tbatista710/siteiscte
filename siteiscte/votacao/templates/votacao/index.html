@@ -1,14 +1,14 @@
 {% if latest_question_list %}
 <ul>
-    {% for questao in latest_question_list %}
+ {% for questao in latest_question_list %}
     <li>
-        <a href="/votacao/{{ questao.id }}">
+    <a href= "{% url 'votacao:detalhe' questao.id %}">
         {{ questao.questao_texto }}
-        </a>
+    </a>
     </li>
     {% endfor %}
-</ul>
+    </ul>
 
 {% else %}
-<p>Nao ha questoes disponiveis.</p>
+    <p>Nao ha questoes disponiveis.</p>
 {% endif %}

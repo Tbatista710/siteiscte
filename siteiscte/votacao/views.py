@@ -1,20 +1,19 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import Questao
+from django.http import Http404
+from django.shortcuts import get_object_or_404, render
 
 
 def index(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
-    template = loader.get_template('votacao/index.html')
-    context = {
-    'latest_question_list': latest_question_list,
-    }
-    return HttpResponse(template.render(context, request))
+    context = {'latest_question_list':latest_question_list}
+    return render(request, 'votacao/index.html', context)
 
 
 def detalhe(request, questao_id):
-    return HttpResponse("Esta e a questao %s." %questao_id)
+    questao = get_object_or_404(Questao, pk=questao_id)
+    return render(request, 'votacao/detalhe.html', {'questao': questao})
 
 
 def resultados(request, questao_id):
