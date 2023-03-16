@@ -9,7 +9,7 @@
     </h1>
 </head>
 <body>
-    <form action="{% url 'votacao:detalhe' questao.id %}" method="post">
+    <form action="{% url 'votacao:createoption' questao.id %}" method="post">
 
         {% csrf_token %}
         <label> Opção: </label>

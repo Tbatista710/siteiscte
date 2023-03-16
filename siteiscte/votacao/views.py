@@ -62,7 +62,7 @@ def createoption(request, questao_id):
         # Se não demos post de uma opção então mostra a página para criar a opção
         return render(request, 'votacao/createoption.html', {'questao': questao})
     else:
-        opcao = Opcao(questao=questao_id, opcao_texto=opcaotexto, votos=0)
+        opcao = Opcao(questao=questao, opcao_texto=opcaotexto, votos=0)
         opcao.save()
-    return HttpResponseRedirect(reverse('votacao:detalhe'))
+    return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
 
