@@ -1,3 +1,12 @@
+<header>
+
+    <title>
+        Votação
+    </title>
+    <h1>
+        Questões para votar
+    </h1>
+</header>
 {% if latest_question_list %}
 <ul>
  {% for questao in latest_question_list %}
@@ -12,3 +21,5 @@
 {% else %}
     <p>Nao ha questoes disponiveis.</p>
 {% endif %}
+
+<a href ="{% url 'votacao:createquestion' %}">Criar nova Questão</a>
