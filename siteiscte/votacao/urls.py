@@ -18,4 +18,7 @@ urlpatterns = [
 
  # ex: votacao/createquestion
  path('createquestion', views.createquestion, name='createquestion'),
+
+ # ex: votacao/5/createoption
+ path('<int:questao_id>/createoption', views.createoption, name='createoption'),
 ]

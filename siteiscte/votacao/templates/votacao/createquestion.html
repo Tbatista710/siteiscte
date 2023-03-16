@@ -10,11 +10,11 @@
 </head>
 <body>
 
-    <form action="{% url 'votacao:index'%}" method="post">
+    <form action="{% url 'votacao:createquestion'%}" method="post">
 
         {% csrf_token %}
-        <label qname="questionname"> Questão: </label>
-        <input type="text" id="qname" name="qname"></inputtype>
+        <label> Questão: </label>
+        <input type="text" id="qname" name="qname">
         <br><br><br>
         <input type="submit" value="Criar Questão"/>
     </form>

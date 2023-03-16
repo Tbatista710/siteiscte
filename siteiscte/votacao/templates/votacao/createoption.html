@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Opção</title>
+    <h1>
+        Criar Opção
+        <br>
+    </h1>
+</head>
+<body>
+    <form action="{% url 'votacao:detalhe' questao.id %}" method="post">
+
+        {% csrf_token %}
+        <label> Opção: </label>
+        <input type="text" id="opname" name="opname">
+        <br><br><br>
+        <input type="submit" value="Criar Opção"/>
+    </form>
+</body>
+</html>
