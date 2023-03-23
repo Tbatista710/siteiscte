@@ -1,5 +1,4 @@
 <header>
-
     <title>
         Votação
     </title>
@@ -23,7 +22,6 @@
 {% endif %}
 
 <form action="{% url 'votacao:createquestion'%}" method="post">
-
     {% csrf_token %}
     <button type="submit" value="Criar nova Questão">
         Criar nova Questão

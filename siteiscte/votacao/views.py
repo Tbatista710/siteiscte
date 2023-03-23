@@ -1,11 +1,36 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Questao, Opcao
+from .models import Questao, Opcao, Aluno
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 import datetime
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
+
+
+def loginview (request):
+    return render(request, 'votacao/loginpage.html')
+
+def registar (request):
+    return render(request, 'votacao/registpage.html')
+
+def userlogin(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return HttpResponseRedirect(reverse('votacao:index'))
+    else:
+        return render(request, 'votacao/loginpage.html')
+
+def userregister (request):
+    user = User.objects.create_user(request.POST['username'],request.POST['email'],request.POST['password'])
+    aluno = Aluno(curso=request.POST['curso'], user =user)
+    aluno.save()
+    return render(request, 'votacao/loginpage.html')
 
 def index(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
@@ -65,4 +90,5 @@ def createoption(request, questao_id):
         opcao = Opcao(questao=questao, opcao_texto=opcaotexto, votos=0)
         opcao.save()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
+
 
