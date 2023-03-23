@@ -22,12 +22,13 @@ urlpatterns = [
  # ex: votacao/5/createoption
  path('<int:questao_id>/createoption', views.createoption, name='createoption'),
 
- path('login', views.loginview, name='loginview'),
-
  path('userlogin', views.userlogin, name="userlogin"),
 
  path('registar', views.registar, name= "registar"),
 
- path('userregister', views.userregister, name="userregister")
+ path('userregister', views.userregister, name="userregister"),
 
+ path('logoutview', views.logoutview, name="logoutview"),
+
+ path('userdetails' , views.userdetails, name="userdetails" )
 ]

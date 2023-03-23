@@ -6,23 +6,25 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 import datetime
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 
-def loginview (request):
-    return render(request, 'votacao/loginpage.html')
+
 
 def registar (request):
     return render(request, 'votacao/registpage.html')
 
 def userlogin(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return HttpResponseRedirect(reverse('votacao:index'))
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('votacao:index'))
+        else:
+            return render(request, 'votacao/loginpage.html')
     else:
         return render(request, 'votacao/loginpage.html')
 
@@ -31,6 +33,10 @@ def userregister (request):
     aluno = Aluno(curso=request.POST['curso'], user =user)
     aluno.save()
     return render(request, 'votacao/loginpage.html')
+
+def logoutview(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('votacao:userlogin'))
 
 def index(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
@@ -91,4 +97,6 @@ def createoption(request, questao_id):
         opcao.save()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
 
-
+def userdetails(request):
+    context = {'aluno': request.user.aluno}
+    return render(request, 'votacao/personalinformation.html', context)

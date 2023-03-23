@@ -2,11 +2,15 @@
     <title>
         Votação
     </title>
+    <h1 style="text-align: right;">
+        <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
+    </h1>
     <h1>
         Questões para votar
     </h1>
 </header>
 {% if latest_question_list %}
+{% if request.user.is_authenticated %}
 <ul>
  {% for questao in latest_question_list %}
     <li>
@@ -17,13 +21,22 @@
     {% endfor %}
     </ul>
 
-{% else %}
-    <p>Nao ha questoes disponiveis.</p>
-{% endif %}
-
 <form action="{% url 'votacao:createquestion'%}" method="post">
     {% csrf_token %}
     <button type="submit" value="Criar nova Questão">
         Criar nova Questão
     </button>
-</form>
+</form><br><br>
+
+<form action="{% url 'votacao:logoutview'%}" method="post">
+    {% csrf_token %}
+    <button type="submit" value="logout">
+        Log Out
+    </button>
+</form><br><br>
+
+{% else %}
+    <p>Nao ha questoes disponiveis.</p>
+{% endif %}
+{% endif %}
+
