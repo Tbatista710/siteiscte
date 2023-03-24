@@ -2,15 +2,29 @@
     <title>
         Votação
     </title>
-    <h1 style="text-align: right;">
-        <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
-    </h1>
+
+</header>
+
+{% if request.user.is_authenticated %}
+ <section style="text-align:right;">
+        <h1>
+            <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
+            {{request.user.aluno.votos}}
+        </h1>
+
+
+        <form action="{% url 'votacao:logoutview'%}" method="post">
+            {% csrf_token %}
+            <button type="submit" value="logout">
+                Log Out
+            </button>
+        </form>
+    </section>
+
     <h1>
         Questões para votar
     </h1>
-</header>
 {% if latest_question_list %}
-{% if request.user.is_authenticated %}
 <ul>
  {% for questao in latest_question_list %}
     <li>
@@ -28,15 +42,15 @@
     </button>
 </form><br><br>
 
-<form action="{% url 'votacao:logoutview'%}" method="post">
-    {% csrf_token %}
-    <button type="submit" value="logout">
-        Log Out
-    </button>
-</form><br><br>
-
-{% else %}
-    <p>Nao ha questoes disponiveis.</p>
 {% endif %}
+{% else %}
+    <h1>Questões para votar</h1>
+    <p>Nao ha questoes disponiveis, necessita realizar login.</p>
+    <form action="{% url 'votacao:userlogin'%}">
+    {% csrf_token %}
+    <button type="submit" value="Log In">
+        Log In
+    </button>
+    </form><br><br>
 {% endif %}
 

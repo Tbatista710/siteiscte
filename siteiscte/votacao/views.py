@@ -10,8 +10,6 @@ from django.contrib.auth import authenticate, login, logout
 
 
 
-
-
 def registar (request):
     return render(request, 'votacao/registpage.html')
 
@@ -65,6 +63,8 @@ def voto(request, questao_id):
     else:
         opcao_seleccionada.votos += 1
         opcao_seleccionada.save()
+        request.user.aluno.votos += 1
+        request.user.aluno.save()
         # Retorne sempre HttpResponseRedirect depois de
         # tratar os dados POST de um form
         # pois isso impede os dados de serem tratados
@@ -98,5 +98,4 @@ def createoption(request, questao_id):
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
 
 def userdetails(request):
-    context = {'aluno': request.user.aluno}
-    return render(request, 'votacao/personalinformation.html', context)
+    return render(request, 'votacao/personalinformation.html')
