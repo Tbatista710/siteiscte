@@ -12,13 +12,20 @@
     </label>
     <br />
     {% endfor %}
-  <input type="submit" value="Voto" />
-
+     <br><input type="submit" value="Voto" /><br><br>
 </form>
 
 <form action="{% url 'votacao:createoption' questao.id %}" method="post">
     {% csrf_token %}
     <button type="submit" value="Criar Opção">
         Criar Opção
+    </button>
+</form>
+
+
+<form action="{% url 'votacao:deletequestion' questao.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" value="Apagar Questão">
+        Apagar Questão
     </button>
 </form>

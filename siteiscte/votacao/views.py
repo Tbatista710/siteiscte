@@ -32,6 +32,8 @@ def userregister (request):
     aluno.save()
     return render(request, 'votacao/loginpage.html')
 
+def userdetails(request):
+    return render(request, 'votacao/personalinformation.html')
 def logoutview(request):
     logout(request)
     return HttpResponseRedirect(reverse('votacao:userlogin'))
@@ -84,6 +86,10 @@ def createquestion(request):
         questao.save()
     return HttpResponseRedirect(reverse('votacao:index'))
 
+def deletequestion(request , questao_id):
+    questao = get_object_or_404(Questao, pk=questao_id)
+    questao.delete()
+    return HttpResponseRedirect(reverse('votacao:index'))
 
 def createoption(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
@@ -97,5 +103,4 @@ def createoption(request, questao_id):
         opcao.save()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
 
-def userdetails(request):
-    return render(request, 'votacao/personalinformation.html')
+
