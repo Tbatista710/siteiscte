@@ -13,7 +13,9 @@
     <br />
     {% endfor %}
     <br><input type="submit" value="Voto" formaction="{% url 'votacao:voto' questao.id %}" /><br><br>
+    {% if user.is_superuser %}
     <input type="submit" value="Apagar Opção" formaction="{% url 'votacao:deleteoption' questao.id %}" /> <br> <br>
+    {% endif %}
 </form>
 
 <form action="{% url 'votacao:createoption' questao.id %}" method="post">
@@ -23,10 +25,11 @@
     </button>
 </form>
 
-
+{% if user.is_superuser %}
 <form action="{% url 'votacao:deletequestion' questao.id %}" method="post">
     {% csrf_token %}
     <button type="submit" value="Apagar Questão">
         Apagar Questão
     </button>
 </form>
+{% endif %}

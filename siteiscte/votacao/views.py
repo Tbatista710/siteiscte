@@ -70,12 +70,12 @@ def voto(request, questao_id):
     else:
         opcao_seleccionada.votos += 1
         opcao_seleccionada.save()
-        if request.user.aluno.votos <= 17:
+        if request.user.aluno.votos < 17:
             request.user.aluno.votos += 1
             request.user.aluno.save()
         else:
             return render(request, 'votacao/detalhe.html', {
-                'error_message': "Chegou ao seu limite de votos", })
+                'questao': questao, 'error_message': "Chegou ao seu limite de votos", })
         # Retorne sempre HttpResponseRedirect depois de
         # tratar os dados POST de um form
         # pois isso impede os dados de serem tratados
