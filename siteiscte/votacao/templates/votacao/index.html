@@ -3,23 +3,34 @@
         Votação
     </title>
 
+    <style>
+aside {
+    width: 10%;
+  float: right;
+  font-style: italic;
+    font-weight: bold;
+}
+</style>
+
 </header>
 
 {% if request.user.is_authenticated %}
  <section style="text-align:right;">
-        <h1>
-            <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
-            {{request.user.aluno.votos}}
-        </h1>
+        <aside >
+            <h1>
+                <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
+                <br> nº de votos = {{request.user.aluno.votos}}
+            </h1>
 
 
-        <form action="{% url 'votacao:logoutview'%}" method="post">
-            {% csrf_token %}
-            <button type="submit" value="logout">
-                Log Out
-            </button>
-        </form>
-    </section>
+            <form action="{% url 'votacao:logoutview'%}" method="post">
+                {% csrf_token %}
+                <button type="submit" value="logout">
+                    Log Out
+                </button>
+            </form>
+            <aside>
+ </section>
 
     <h1>
         Questões para votar

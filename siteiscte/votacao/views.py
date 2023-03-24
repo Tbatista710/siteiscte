@@ -9,9 +9,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-
-def registar (request):
+def registar(request):
     return render(request, 'votacao/registpage.html')
+
 
 def userlogin(request):
     if request.method == 'POST':
@@ -26,21 +26,26 @@ def userlogin(request):
     else:
         return render(request, 'votacao/loginpage.html')
 
-def userregister (request):
-    user = User.objects.create_user(request.POST['username'],request.POST['email'],request.POST['password'])
-    aluno = Aluno(curso=request.POST['curso'], user =user)
+
+def userregister(request):
+    user = User.objects.create_user(request.POST['username'], request.POST['email'], request.POST['password'])
+    aluno = Aluno(curso=request.POST['curso'], user=user, votos=0)
     aluno.save()
     return render(request, 'votacao/loginpage.html')
 
+
 def userdetails(request):
     return render(request, 'votacao/personalinformation.html')
+
+
 def logoutview(request):
     logout(request)
     return HttpResponseRedirect(reverse('votacao:userlogin'))
 
+
 def index(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
-    context = {'latest_question_list':latest_question_list}
+    context = {'latest_question_list': latest_question_list}
     return render(request, 'votacao/index.html', context)
 
 
@@ -61,12 +66,16 @@ def voto(request, questao_id):
     except (KeyError, Opcao.DoesNotExist):
         # Apresenta de novo o form para votar
         return render(request, 'votacao/detalhe.html', {
-        'questao': questao,'error_message': "Não escolheu uma opção",})
+            'questao': questao, 'error_message': "Não escolheu uma opção", })
     else:
         opcao_seleccionada.votos += 1
         opcao_seleccionada.save()
-        request.user.aluno.votos += 1
-        request.user.aluno.save()
+        if request.user.aluno.votos <= 17:
+            request.user.aluno.votos += 1
+            request.user.aluno.save()
+        else:
+            return render(request, 'votacao/detalhe.html', {
+                'error_message': "Chegou ao seu limite de votos", })
         # Retorne sempre HttpResponseRedirect depois de
         # tratar os dados POST de um form
         # pois isso impede os dados de serem tratados
@@ -86,10 +95,12 @@ def createquestion(request):
         questao.save()
     return HttpResponseRedirect(reverse('votacao:index'))
 
-def deletequestion(request , questao_id):
+
+def deletequestion(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     questao.delete()
     return HttpResponseRedirect(reverse('votacao:index'))
+
 
 def createoption(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
@@ -104,3 +115,14 @@ def createoption(request, questao_id):
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
 
 
+def deleteoption(request, questao_id):
+    questao = get_object_or_404(Questao, pk=questao_id)
+    try:
+        opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
+    except (KeyError, Opcao.DoesNotExist):
+        # Apresenta de novo o form
+        return render(request, 'votacao/detalhe.html', {
+            'questao': questao, 'error_message': "Não escolheu uma opção", })
+    else:
+        opcao_seleccionada.delete()
+    return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
