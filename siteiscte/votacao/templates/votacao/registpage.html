@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title> Registar </title>
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'css/main.css' %}">
 </head>
 <body>
      <header> <h1> Registar </h1> </header>
@@ -15,9 +17,9 @@
         <label for="password">Password</label><br>
         <input type="password" id="password" name="password"><br>
         <label for="curso">Curso</label><br>
-        <input type="curso" id="curso" name="curso"><br>
+        <input type="text" id="curso" name="curso"><br>
         <label for="grupo">Grupo</label><br>
-        <input type="grupo" id="grupo" name="grupo"><br><br>
+        <input type="text" id="grupo" name="grupo"><br><br>
         <input type="submit" value="Registar">
     </form>
 

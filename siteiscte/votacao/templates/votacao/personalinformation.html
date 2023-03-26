@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Personal Information</title>
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'css/main.css' %}">
 </head>
 <body>
-    <h1> {{request.user.username}} </h1>
-    <h2> {{request.user.email}} </h2>
-    <h2> {{request.user.aluno.curso}} </h2>
-    <h2> {{request.user.aluno.grupo}} </h2>
+    <h1> Informação Pessoal </h1>
+    <h2> Username <p>{{request.user.username}}</p> </h2>
+    <h2> Email <p>{{request.user.email}}</p> </h2>
+    <h2> Curso <p>{{request.user.aluno.curso}}</p> </h2>
+    <h2> Grupo <p>{{request.user.aluno.grupo}}</p> </h2>
 </body>
 </html>

@@ -1,13 +1,6 @@
 <header>
-<style>
-    aside {
-        width: 10%;
-        float: right;
-        font-style: italic;
-        font-weight: bold;
-        text-align:right;
-    }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'css/main.css' %}">
 </header>
 {% if request.user.is_authenticated %}
  <section>

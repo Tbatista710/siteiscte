@@ -28,7 +28,7 @@ urlpatterns = [
 
  path('logoutview', views.logoutview, name="logoutview"),
 
- path('userdetails' , views.userdetails, name="userdetails"),
+ path('userdetails', views.userdetails, name="userdetails"),
 
  path('<int:questao_id>/deletequestion', views.deletequestion, name="deletequestion"),
 

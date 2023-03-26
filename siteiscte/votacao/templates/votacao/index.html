@@ -1,18 +1,10 @@
+
 <header>
     <title>
         Votação
     </title>
-
-    <style>
-    aside {
-        width: 10%;
-        float: right;
-        font-style: italic;
-        font-weight: bold;
-        text-align:right;
-    }
-    </style>
-
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'css/main.css' %}">
 </header>
 
 {% if request.user.is_authenticated %}
@@ -60,7 +52,7 @@
 
     {% else %}
     <h1>Questões para votar</h1>
-    <p>Nao ha questoes disponiveis, necessita realizar login.</p>
+    <p>Nao ha questões disponiveis, necessita realizar login.</p>
     <form action="{% url 'votacao:userlogin'%}">
     {% csrf_token %}
     <button type="submit" value="Log In">

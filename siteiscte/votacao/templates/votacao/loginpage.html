@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'css/main.css' %}">
 </head>
 <body>
     <header> <h1> Login </h1> </header>
@@ -11,7 +13,7 @@
         <label for="username">Username</label><br>
         <input type="text" id="username" name="username"><br>
         <label for="password">Password</label><br>
-        <input type="password" id="password" name="password"><br><br>
+        <input type="password" id="password" name="password"><br>
         <input type="submit" value="Log In">
     </form>
     <p> Ainda não tem conta ? <a href="{% url 'votacao:userregister' %}"> Registar </a></p>
