@@ -1,35 +1,77 @@
+<header>
+<style>
+    aside {
+        width: 10%;
+        float: right;
+        font-style: italic;
+        font-weight: bold;
+        text-align:right;
+    }
+    </style>
+</header>
+{% if request.user.is_authenticated %}
+ <section>
+        <aside >
+            <h1>
+                <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
+                {% if not request.user.is_superuser %}
+                <br> nº de votos = {{request.user.aluno.votos}}
+                {% endif %}
+            </h1>
+
+            <form action="{% url 'votacao:logoutview'%}" method="post">
+                {% csrf_token %}
+                <button type="submit" value="logout">
+                    Log Out
+                </button>
+            </form>
+            </aside>
+    </section>
+{% endif %}
+
 <h1>{{ questao.questao_texto }}</h1>
 {% if error_message %}
  <p><strong>{{ error_message }}</strong></p>
 {% endif %}
 
-<form action="" method="post">
- {% csrf_token %}
- {% for opcao in questao.opcao_set.all %}
-  <input type="radio" name="opcao" id="opcao{{ forloop.counter }}" value="{{ opcao.id }}" />
-    <label for="opcao{{ forloop.counter }}">
-      {{ opcao.opcao_texto }}
-    </label>
-    <br />
-    {% endfor %}
-    <br><input type="submit" value="Voto" formaction="{% url 'votacao:voto' questao.id %}" /><br><br>
-    {% if user.is_superuser %}
-    <input type="submit" value="Apagar Opção" formaction="{% url 'votacao:deleteoption' questao.id %}" /> <br> <br>
+{% if request.user.is_authenticated %}
+    <form action="" method="post">
+     {% csrf_token %}
+     {% for opcao in questao.opcao_set.all %}
+      <input type="radio" name="opcao" id="opcao{{ forloop.counter }}" value="{{ opcao.id }}" />
+        <label for="opcao{{ forloop.counter }}">
+          {{ opcao.opcao_texto }}
+        </label>
+        <br />
+        {% endfor %}
+        <br><input type="submit" value="Voto" formaction="{% url 'votacao:voto' questao.id %}" /><br><br>
+        {% if user.is_superuser %}
+        <input type="submit" value="Apagar Opção" formaction="{% url 'votacao:deleteoption' questao.id %}" />
+        {% endif %}
+    </form>
+
+    {% if request.user.is_superuser %}
+    <form action="{% url 'votacao:createoption' questao.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Criar Opção">
+            Criar Opção
+        </button>
+    </form>
+
+    <form action="{% url 'votacao:deletequestion' questao.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Apagar Questão">
+            Apagar Questão
+        </button>
+    </form>
     {% endif %}
-</form>
 
-<form action="{% url 'votacao:createoption' questao.id %}" method="post">
+{% else %}
+    <p> Não tem permissão para votar em questões, necessita realizar login</p>
+    <form action="{% url 'votacao:userlogin'%}">
     {% csrf_token %}
-    <button type="submit" value="Criar Opção">
-        Criar Opção
+    <button type="submit" value="Log In">
+        Log In
     </button>
-</form>
-
-{% if user.is_superuser %}
-<form action="{% url 'votacao:deletequestion' questao.id %}" method="post">
-    {% csrf_token %}
-    <button type="submit" value="Apagar Questão">
-        Apagar Questão
-    </button>
-</form>
+    </form><br><br>
 {% endif %}

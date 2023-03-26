@@ -9,14 +9,16 @@
     </h1>
 </head>
 <body>
-
-    <form action="{% url 'votacao:createquestion'%}" method="post">
-        {% csrf_token %}
-        <label> Questão: </label>
-        <input type="text" id="qname" name="qname">
-        <br><br><br>
-        <input type="submit" value="Criar Questão"/>
-    </form>
-
+    {% if request.user.is_authenticated and request.user.is_superuser%}
+        <form action="{% url 'votacao:createquestion'%}" method="post">
+            {% csrf_token %}
+            <label> Questão: </label>
+            <input type="text" id="qname" name="qname">
+            <br><br><br>
+            <input type="submit" value="Criar Questão"/>
+        </form>
+        {% else %}
+            <p> Não tem permissões para criar uma questão </p>
+    {% endif %}
 </body>
 </html>

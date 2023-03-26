@@ -4,24 +4,26 @@
     </title>
 
     <style>
-aside {
-    width: 10%;
-  float: right;
-  font-style: italic;
-    font-weight: bold;
-}
-</style>
+    aside {
+        width: 10%;
+        float: right;
+        font-style: italic;
+        font-weight: bold;
+        text-align:right;
+    }
+    </style>
 
 </header>
 
 {% if request.user.is_authenticated %}
- <section style="text-align:right;">
+    <section>
         <aside >
             <h1>
                 <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
+                {% if not request.user.is_superuser %}
                 <br> nº de votos = {{request.user.aluno.votos}}
+                {% endif %}
             </h1>
-
 
             <form action="{% url 'votacao:logoutview'%}" method="post">
                 {% csrf_token %}
@@ -29,32 +31,34 @@ aside {
                     Log Out
                 </button>
             </form>
-            <aside>
- </section>
+            </aside>
+    </section>
 
     <h1>
         Questões para votar
     </h1>
-{% if latest_question_list %}
-<ul>
- {% for questao in latest_question_list %}
-    <li>
-    <a href= "{% url 'votacao:detalhe' questao.id %}">
-        {{ questao.questao_texto }}
-    </a>
-    </li>
-    {% endfor %}
-    </ul>
+    {% if latest_question_list %}
+    <ul>
+     {% for questao in latest_question_list %}
+        <li>
+        <a href= "{% url 'votacao:detalhe' questao.id %}">
+            {{ questao.questao_texto }}
+        </a>
+        </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 
-<form action="{% url 'votacao:createquestion'%}" method="post">
-    {% csrf_token %}
-    <button type="submit" value="Criar nova Questão">
-        Criar nova Questão
-    </button>
-</form><br><br>
+    {% if request.user.is_superuser%}
+    <form action="{% url 'votacao:createquestion'%}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Criar nova Questão">
+            Criar nova Questão
+        </button>
+    </form><br><br>
+    {% endif %}
 
-{% endif %}
-{% else %}
+    {% else %}
     <h1>Questões para votar</h1>
     <p>Nao ha questoes disponiveis, necessita realizar login.</p>
     <form action="{% url 'votacao:userlogin'%}">
@@ -64,4 +68,6 @@ aside {
     </button>
     </form><br><br>
 {% endif %}
+
+
 

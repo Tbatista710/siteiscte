@@ -9,13 +9,16 @@
     </h1>
 </head>
 <body>
-    <form action="{% url 'votacao:createoption' questao.id %}" method="post">
-
-        {% csrf_token %}
-        <label> Opção: </label>
-        <input type="text" id="opname" name="opname">
-        <br><br><br>
-        <input type="submit" value="Criar Opção"/>
-    </form>
+    {% if request.user.is_authenticated and request.user.is_superuser%}
+        <form action="{% url 'votacao:createoption' questao.id %}" method="post">
+            {% csrf_token %}
+            <label> Opção: </label>
+            <input type="text" id="opname" name="opname">
+            <br><br><br>
+            <input type="submit" value="Criar Opção"/>
+        </form>
+    {% else %}
+            <p> Não tem permissões para criar uma opção </p>
+    {% endif %}
 </body>
 </html>

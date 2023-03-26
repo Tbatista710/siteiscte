@@ -9,9 +9,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-def registar(request):
-    return render(request, 'votacao/registpage.html')
-
 
 def userlogin(request):
     if request.method == 'POST':
@@ -28,10 +25,13 @@ def userlogin(request):
 
 
 def userregister(request):
-    user = User.objects.create_user(request.POST['username'], request.POST['email'], request.POST['password'])
-    aluno = Aluno(curso=request.POST['curso'], user=user, votos=0)
-    aluno.save()
-    return render(request, 'votacao/loginpage.html')
+    if request.method == 'POST':
+        user = User.objects.create_user(request.POST['username'], request.POST['email'], request.POST['password'])
+        aluno = Aluno(curso=request.POST['curso'], user=user, votos=0, grupo=request.POST['grupo'])
+        aluno.save()
+        return render(request, 'votacao/loginpage.html')
+    else:
+        return render(request, 'votacao/registpage.html')
 
 
 def userdetails(request):
@@ -68,19 +68,19 @@ def voto(request, questao_id):
         return render(request, 'votacao/detalhe.html', {
             'questao': questao, 'error_message': "Não escolheu uma opção", })
     else:
-        opcao_seleccionada.votos += 1
-        opcao_seleccionada.save()
-        if request.user.aluno.votos < 17:
-            request.user.aluno.votos += 1
-            request.user.aluno.save()
+        if not request.user.is_superuser:
+            num_grupo = request.user.aluno.grupo[-2:]
+            if request.user.aluno.votos < int(num_grupo):
+                opcao_seleccionada.votos += 1
+                opcao_seleccionada.save()
+                request.user.aluno.votos += 1
+                request.user.aluno.save()
+            else:
+                return render(request, 'votacao/detalhe.html', {
+                    'questao': questao, 'error_message': "Chegou ao seu limite de votos", })
         else:
-            return render(request, 'votacao/detalhe.html', {
-                'questao': questao, 'error_message': "Chegou ao seu limite de votos", })
-        # Retorne sempre HttpResponseRedirect depois de
-        # tratar os dados POST de um form
-        # pois isso impede os dados de serem tratados
-        # repetidamente se o utilizador
-        # voltar para a página web anterior.
+            opcao_seleccionada.votos += 1
+            opcao_seleccionada.save()
     return HttpResponseRedirect(reverse('votacao:resultados', args=[questao.id]))
 
 
