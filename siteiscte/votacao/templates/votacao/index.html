@@ -1,34 +1,42 @@
-
-<header>
+<head>
     <title>
         Votação
     </title>
     {% load static %}
-    <link rel="stylesheet" , href="{% static 'css/main.css' %}">
-</header>
+    <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+</head>
+<body>
 
 {% if request.user.is_authenticated %}
-    <section>
-        <aside >
-            <h1>
-                <a href="{% url 'votacao:userdetails' %}">{{request.user.username}}</a>
+    <header class="row">
+        <section class="column">
+            <image> <img id="logo" src="{% static 'votacao/images/logo_iscte.png' %}"> </image>
+        </section>
+        <section class="column">
+            <ul class="horizontal-links">
+                <li> <a href="{% url 'votacao:index' %}"> Página Inicial  </a> </li>
+                <li> <a href="{% url 'votacao:userdetails' %}"> Detalhes Utilizador </a></li>
+            </ul>
+        </section>
+        <section class="column">
+            <h1 class="headertext">
+                {{request.user.username}}
                 {% if not request.user.is_superuser %}
-                <br> nº de votos = {{request.user.aluno.votos}}
+                <br>Nº de votos = {{request.user.aluno.votos}}
                 {% endif %}
-            </h1>
-
-            <form action="{% url 'votacao:logoutview'%}" method="post">
+                <form action="{% url 'votacao:logoutview'%}" method="post">
                 {% csrf_token %}
                 <button type="submit" value="logout">
                     Log Out
                 </button>
             </form>
-            </aside>
-    </section>
+            </h1>
+        </section>
 
-    <h1>
-        Questões para votar
-    </h1>
+    </header>
+
+    <h1> Questões para votar </h1>
+
     {% if latest_question_list %}
     <ul>
      {% for questao in latest_question_list %}
@@ -60,6 +68,7 @@
     </button>
     </form><br><br>
 {% endif %}
+</body>
 
 
 

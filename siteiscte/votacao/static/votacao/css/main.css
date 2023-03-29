@@ -1,12 +1,4 @@
-aside {
-  width: 10%;
-  float: right;
-  font-style: italic;
-  font-weight: bold;
-  text-align:right;
-}
-
- body {
+body {
   background-color: #fff;
   color: #333;
   font-family: Arial, sans-serif;
@@ -17,19 +9,19 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 }
 
+p{
+    color: #2196F3;
+}
+
 a {
   color: #2196F3;
   text-decoration: none;
-  transition: color 0.3s ease-in-out;
-}
-
-p{
-  color: #2196F3;
 }
 
 a:hover {
   color: #0D47A1;
 }
+
 
 button, input[type="submit"]{
   background-color: #2196F3;
@@ -59,3 +51,42 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
   box-sizing: border-box;
   margin-bottom: 10px;
 }
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  padding: 20px;
+}
+
+.headertext{
+    margin-top:30px;
+    margin-left: 400px;
+}
+
+.horizontal-links {
+  list-style: none;
+  margin-top: 55px;
+  text-align:center;
+}
+
+.horizontal-links li {
+  display: inline-block;
+}
+
+.horizontal-links li a {
+  display: block;
+  padding: 10px;
+}
+
+#logo{
+  width: 70%;
+  height: auto;
+}
+
+
