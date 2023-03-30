@@ -1,3 +1,4 @@
+
 body {
   background-color: #fff;
   color: #333;
@@ -7,6 +8,14 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-weight: bold;
+  text-align: center;
+}
+
+
+ul {
+    display: inline-block;
+    text-align: left;
+    list-style: none;
 }
 
 p{
@@ -30,6 +39,7 @@ button, input[type="submit"]{
   padding: 5px 10px;
   font-size: 12px;
   cursor: pointer;
+  text-align:center;
 }
 
 button:hover, input[type="submit"]:hover {
@@ -38,6 +48,7 @@ button:hover, input[type="submit"]:hover {
 
 form {
   margin-bottom: 20px;
+  text-align:center;
 }
 
 label {
@@ -72,7 +83,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
 .horizontal-links {
   list-style: none;
   margin-top: 55px;
-  text-align:center;
+  margin-left: 150px;
 }
 
 .horizontal-links li {
@@ -84,9 +95,17 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
   padding: 10px;
 }
 
+.ulsection {
+    text-align:center;
+}
+
 #logo{
   width: 70%;
   height: auto;
+}
+#registertext {
+    text-align:center;
+    color: black;
 }
 
 

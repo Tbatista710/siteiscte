@@ -7,6 +7,7 @@ from django.urls import reverse
 import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -34,31 +35,32 @@ def userregister(request):
         return render(request, 'votacao/registpage.html')
 
 
+@login_required(login_url='/votacao/userlogin')
 def userdetails(request):
     return render(request, 'votacao/personalinformation.html')
 
-
+@login_required(login_url='/votacao/userlogin')
 def logoutview(request):
     logout(request)
     return HttpResponseRedirect(reverse('votacao:userlogin'))
 
-
+@login_required(login_url='/votacao/userlogin')
 def index(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
     context = {'latest_question_list': latest_question_list}
     return render(request, 'votacao/index.html', context)
 
-
+@login_required(login_url='/votacao/userlogin')
 def detalhe(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/detalhe.html', {'questao': questao})
 
-
+@login_required(login_url='/votacao/userlogin')
 def resultados(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/resultados.html', {'questao': questao})
 
-
+@login_required(login_url='/votacao/userlogin')
 def voto(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     try:
@@ -83,7 +85,7 @@ def voto(request, questao_id):
             opcao_seleccionada.save()
     return HttpResponseRedirect(reverse('votacao:resultados', args=[questao.id]))
 
-
+@login_required(login_url='/votacao/userlogin')
 def createquestion(request):
     try:
         questaotexto = request.POST['qname']
@@ -94,13 +96,13 @@ def createquestion(request):
         questao.save()
     return HttpResponseRedirect(reverse('votacao:index'))
 
-
+@login_required(login_url='/votacao/userlogin')
 def deletequestion(request, questao_id):
     if request.user.is_superuser and request.user.is_authenticated:
         questao = get_object_or_404(Questao, pk=questao_id)
         questao.delete()
     return HttpResponseRedirect(reverse('votacao:index'))
-
+@login_required(login_url='/votacao/userlogin')
 def createoption(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     try:
@@ -112,7 +114,7 @@ def createoption(request, questao_id):
         opcao.save()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
 
-
+@login_required(login_url='/votacao/userlogin')
 def deleteoption(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     try:

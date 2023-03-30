@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Criar Questão</title>
+    {% extends "votacao/index.html" %}
     {% load static %}
     <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
-    <h1>
-        Criar Questão
-        <br>
-    </h1>
 </head>
 
 <body>
-    {% if request.user.is_authenticated and request.user.is_superuser%}
+    {% block title %}
+    <h1>Criar Questão<br></h1>
+    {% endblock %}
+
+    {% block content %}
+    {% if request.user.is_superuser%}
         <form action="{% url 'votacao:createquestion'%}" method="post">
             {% csrf_token %}
             <label> Questão: </label>
             <input type="text" id="qname" name="qname">
             <input type="submit" value="Criar Questão"/>
         </form>
-        {% else %}
-            <p> Não tem permissões para criar uma questão </p>
     {% endif %}
+    {% endblock %}
 </body>
 </html>

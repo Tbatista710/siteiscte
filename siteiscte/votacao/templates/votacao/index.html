@@ -6,9 +6,8 @@
     <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
 </head>
 <body>
-
-{% if request.user.is_authenticated %}
     <header class="row">
+        {% block header %}
         <section class="column">
             <image> <img id="logo" src="{% static 'votacao/images/logo_iscte.png' %}"> </image>
         </section>
@@ -32,12 +31,16 @@
             </form>
             </h1>
         </section>
-
+        {% endblock %}
     </header>
 
+    {% block title %}
     <h1> Questões para votar </h1>
+    {% endblock %}
 
-    {% if latest_question_list %}
+    {% block content %}
+    <section class="ulsection">
+         {% if latest_question_list %}
     <ul>
      {% for questao in latest_question_list %}
         <li>
@@ -57,17 +60,8 @@
         </button>
     </form><br><br>
     {% endif %}
-
-    {% else %}
-    <h1>Questões para votar</h1>
-    <p>Nao ha questões disponiveis, necessita realizar login.</p>
-    <form action="{% url 'votacao:userlogin'%}">
-    {% csrf_token %}
-    <button type="submit" value="Log In">
-        Log In
-    </button>
-    </form><br><br>
-{% endif %}
+    {% endblock %}
+    </section>
 </body>
 
 

@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Personal Information</title>
+    {% extends "votacao/index.html" %}
     {% load static %}
     <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
 </head>
 <body>
-    <h1> Informação Pessoal </h1>
+    {% block title %}
+        <h1> Informação Pessoal </h1>
+    {% endblock %}
+
+    {% block content %}
     <h2> Username <p>{{request.user.username}}</p> </h2>
     <h2> Email <p>{{request.user.email}}</p> </h2>
+    {% if not request.user.is_superuser %}
     <h2> Curso <p>{{request.user.aluno.curso}}</p> </h2>
     <h2> Grupo <p>{{request.user.aluno.grupo}}</p> </h2>
+    {% endif %}
+    {% endblock %}
 </body>
 </html>
