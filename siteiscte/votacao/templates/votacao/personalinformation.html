@@ -19,6 +19,13 @@
     <h2> Curso <p>{{request.user.aluno.curso}}</p> </h2>
     <h2> Grupo <p>{{request.user.aluno.grupo}}</p> </h2>
     {% endif %}
+
+    {% if request.user.aluno.imagem %}
+    <img class="detailimage" src="/static/media/{{request.user.aluno.imagem}}">
+    {% else %}
+    <img class="detailimage" src="{% static 'media/default_image.png' %}">
+    {% endif %}
+
     {% endblock %}
 </body>
 </html>

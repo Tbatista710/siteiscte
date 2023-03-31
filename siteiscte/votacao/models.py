@@ -30,4 +30,6 @@ class Aluno(models.Model):
     curso = models.CharField(max_length=100)
     votos = models.IntegerField()
     grupo = models.CharField(max_length=100)
+    imagem = models.CharField(max_length=100)
+
 

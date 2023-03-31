@@ -19,10 +19,19 @@
         </section>
         <section class="column">
             <h1 class="headertext">
+
                 {{request.user.username}}
+
+                {% if request.user.aluno.imagem %}
+                <img class="headerimage" src="/static/media/{{request.user.aluno.imagem}}">
+                {% else %}
+                <img class="headerimage" src="{% static 'media/default_image.png' %}">
+                {% endif %}
+
                 {% if not request.user.is_superuser %}
                 <br>Nº de votos = {{request.user.aluno.votos}}
                 {% endif %}
+
                 <form action="{% url 'votacao:logoutview'%}" method="post">
                 {% csrf_token %}
                 <button type="submit" value="logout">

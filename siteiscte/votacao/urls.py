@@ -1,7 +1,10 @@
 from django.urls import include, path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'votacao'
+
 urlpatterns = [
 
  # ex: votacao/
@@ -34,4 +37,10 @@ urlpatterns = [
 
  path('<int:questao_id>/deleteoption', views.deleteoption, name="deleteoption"),
 
+ path('fazer_upload', views.fazer_upload, name='fazer_upload')
 ]
+
+if settings.DEBUG:
+ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

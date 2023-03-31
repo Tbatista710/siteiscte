@@ -99,13 +99,29 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
     text-align:center;
 }
 
+.detailimage {
+  width: 5%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headerimage {
+  width: 10%;
+  height: auto;
+}
+
 #logo{
   width: 70%;
   height: auto;
 }
+
 #registertext {
     text-align:center;
     color: black;
 }
+
+
 
 

@@ -8,6 +8,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import user_passes_test
 
 
 
@@ -102,6 +104,7 @@ def deletequestion(request, questao_id):
         questao = get_object_or_404(Questao, pk=questao_id)
         questao.delete()
     return HttpResponseRedirect(reverse('votacao:index'))
+
 @login_required(login_url='/votacao/userlogin')
 def createoption(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
@@ -125,3 +128,19 @@ def deleteoption(request, questao_id):
     else:
         opcao_seleccionada.delete()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
+
+@login_required(login_url='/votacao/userlogin')
+def fazer_upload(request):
+    if request.method == 'POST' and request.FILES.get('myfile') is not None:
+        myfile = request.FILES['myfile']
+        aluno = get_object_or_404(Aluno, pk=request.user.aluno.id)
+        aluno.imagem = myfile.name
+        aluno.save()
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'votacao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url})
+
+    return render(request, 'votacao/fazer_upload.html')
+
+
