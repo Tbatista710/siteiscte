@@ -12,6 +12,8 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import user_passes_test
 
 
+def admin_check(user):
+    return user.is_superuser
 
 def userlogin(request):
     if request.method == 'POST':
@@ -88,6 +90,7 @@ def voto(request, questao_id):
     return HttpResponseRedirect(reverse('votacao:resultados', args=[questao.id]))
 
 @login_required(login_url='/votacao/userlogin')
+@user_passes_test(admin_check, login_url='/votacao/userlogin')
 def createquestion(request):
     try:
         questaotexto = request.POST['qname']
@@ -99,6 +102,7 @@ def createquestion(request):
     return HttpResponseRedirect(reverse('votacao:index'))
 
 @login_required(login_url='/votacao/userlogin')
+@user_passes_test(admin_check, login_url='/votacao/userlogin')
 def deletequestion(request, questao_id):
     if request.user.is_superuser and request.user.is_authenticated:
         questao = get_object_or_404(Questao, pk=questao_id)
@@ -106,6 +110,7 @@ def deletequestion(request, questao_id):
     return HttpResponseRedirect(reverse('votacao:index'))
 
 @login_required(login_url='/votacao/userlogin')
+@user_passes_test(admin_check, login_url='/votacao/userlogin')
 def createoption(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     try:
@@ -118,6 +123,7 @@ def createoption(request, questao_id):
     return HttpResponseRedirect(reverse('votacao:detalhe', args=[questao.id]))
 
 @login_required(login_url='/votacao/userlogin')
+@user_passes_test(admin_check, login_url='/votacao/userlogin')
 def deleteoption(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     try:

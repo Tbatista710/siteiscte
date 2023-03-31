@@ -21,11 +21,19 @@
     {% endif %}
 
     {% if request.user.aluno.imagem %}
-    <img class="detailimage" src="/static/media/{{request.user.aluno.imagem}}">
+    <img class="detailimage" src="/static/media/{{request.user.aluno.imagem}}"><br>
     {% else %}
-    <img class="detailimage" src="{% static 'media/default_image.png' %}">
+    <img class="detailimage" src="{% static 'media/default_image.png' %}"><br>
     {% endif %}
 
+    {% if request.user.aluno %}
+    <form action="{% url 'votacao:fazer_upload' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Alterar Imagem">
+            Alterar Imagem
+        </button>
+    </form><br><br>
+    {% endif %}
     {% endblock %}
 </body>
 </html>

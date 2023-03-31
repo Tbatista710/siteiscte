@@ -122,6 +122,10 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
     color: black;
 }
 
+#uploadtext {
+    text-align:center;
+}
+
 
 
 
