@@ -1,0 +1,13 @@
+Utilizadores
+
+Username: Admin
+Password: admin1234
+
+Username: Tiago
+Password: tiago1234
+
+Username: Gonçalo
+Password: gonçalo1234
+
+Username: Alexandre
+Password: alex1234

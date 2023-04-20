@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Registar </title>
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+</head>
+<body>
+     <header> <h1> Registar </h1> </header>
+    <form action="{% url 'votacao:userregister'  %}" method="post">
+        {% csrf_token %}
+        <label for="username">Username</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" name="password"><br>
+        <label for="curso">Curso</label><br>
+        <input type="text" id="curso" name="curso"><br>
+        <label for="grupo">Grupo</label><br>
+        <input type="text" id="grupo" name="grupo"><br><br>
+        <input type="submit" value="Registar">
+    </form>
+
+</body>
+</html>

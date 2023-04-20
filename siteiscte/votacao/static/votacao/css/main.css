@@ -1,0 +1,131 @@
+
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+ul {
+    display: inline-block;
+    text-align: left;
+    list-style: none;
+}
+
+p{
+    color: #2196F3;
+}
+
+a {
+  color: #2196F3;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0D47A1;
+}
+
+
+button, input[type="submit"]{
+  background-color: #2196F3;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align:center;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: #0D47A1;
+}
+
+form {
+  margin-bottom: 20px;
+  text-align:center;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input[type="text"], input[type="email"], input[type="password"], textarea{
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  padding: 20px;
+}
+
+.headertext{
+    margin-top:30px;
+    margin-left: 400px;
+}
+
+.horizontal-links {
+  list-style: none;
+  margin-top: 55px;
+  margin-left: 150px;
+}
+
+.horizontal-links li {
+  display: inline-block;
+}
+
+.horizontal-links li a {
+  display: block;
+  padding: 10px;
+}
+
+.ulsection {
+    text-align:center;
+}
+
+.detailimage {
+  width: 5%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headerimage {
+  width: 10%;
+  height: auto;
+}
+
+#logo{
+  width: 70%;
+  height: auto;
+}
+
+#registertext {
+    text-align:center;
+    color: black;
+}
+
+#uploadtext {
+    text-align:center;
+}
+
+
+
+

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Opção</title>
+    {% extends "votacao/index.html" %}
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+</head>
+<body>
+    {% block title %}
+    <h1>Criar Opção</h1>
+    {% endblock %}
+
+    {% block content %}
+    {% if request.user.is_authenticated and request.user.is_superuser%}
+        <form action="{% url 'votacao:createoption' questao.id %}" method="post">
+            {% csrf_token %}
+            <label> Opção: </label>
+            <input type="text" id="opname" name="opname">
+            <input type="submit" value="Criar Opção"/>
+        </form>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

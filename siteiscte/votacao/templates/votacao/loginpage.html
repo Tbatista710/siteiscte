@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+</head>
+<body>
+    <header> <h1> Login </h1> </header>
+    <form action="{% url 'votacao:userlogin'  %}" method="post">
+        {% csrf_token %}
+        <label for="username">Username</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Log In">
+    </form>
+    <p id="registertext"> Ainda não tem conta? <a href="{% url 'votacao:userregister' %}"> Registar </a></p>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<head>
+    <title>
+        Votação
+    </title>
+    {% load static %}
+    <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+</head>
+<body>
+    <header class="row">
+        {% block header %}
+        <section class="column">
+            <image> <img id="logo" src="{% static 'votacao/images/logo_iscte.png' %}"> </image>
+        </section>
+        <section class="column">
+            <ul class="horizontal-links">
+                <li> <a href="{% url 'votacao:index' %}"> Página Inicial  </a> </li>
+                <li> <a href="{% url 'votacao:userdetails' %}"> Detalhes Utilizador </a></li>
+            </ul>
+        </section>
+        <section class="column">
+            <h1 class="headertext">
+
+                {{request.user.username}}
+
+                {% if request.user.aluno.imagem %}
+                <img class="headerimage" src="/static/media/{{request.user.aluno.imagem}}">
+                {% else %}
+                <img class="headerimage" src="{% static 'media/default_image.png' %}">
+                {% endif %}
+
+                {% if not request.user.is_superuser %}
+                <br>Nº de votos = {{request.user.aluno.votos}}
+                {% endif %}
+
+                <form action="{% url 'votacao:logoutview'%}" method="post">
+                {% csrf_token %}
+                <button type="submit" value="logout">
+                    Log Out
+                </button>
+            </form>
+            </h1>
+        </section>
+        {% endblock %}
+    </header>
+
+    {% block title %}
+    <h1> Questões para votar </h1>
+    {% endblock %}
+
+    {% block content %}
+    <section class="ulsection">
+         {% if latest_question_list %}
+    <ul>
+     {% for questao in latest_question_list %}
+        <li>
+        <a href= "{% url 'votacao:detalhe' questao.id %}">
+            {{ questao.questao_texto }}
+        </a>
+        </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if request.user.is_superuser%}
+    <form action="{% url 'votacao:createquestion'%}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Criar nova Questão">
+            Criar nova Questão
+        </button>
+    </form><br><br>
+    {% endif %}
+    {% endblock %}
+    </section>
+</body>
+
+
+
