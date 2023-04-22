@@ -29,6 +29,7 @@ a {
 
 a:hover {
   color: #0D47A1;
+  cursor: pointer;
 }
 
 
@@ -44,6 +45,12 @@ button, input[type="submit"]{
 
 button:hover, input[type="submit"]:hover {
   background-color: #0D47A1;
+}
+
+button:disabled , input[type="submit"]:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
 }
 
 form {
@@ -134,7 +141,4 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
   display:none;
 }
 
-#details {
-    display: none;
-}
 

@@ -5,6 +5,7 @@
     <title> Registar </title>
     {% load static %}
     <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
      <header> <h1> Registar </h1> </header>
@@ -20,8 +21,33 @@
         <input type="text" id="curso" name="curso"><br>
         <label for="grupo">Grupo</label><br>
         <input type="text" id="grupo" name="grupo"><br><br>
-        <input type="submit" value="Registar">
+        <label for="comentario">Comentário</label><br>
+        <textarea id="comentario" name="comentario" rows="5" cols="50"></textarea><br>
+        <p id="info"> </p>
+        <button type="button" id="btnvalid">Validar Comentário</button>
+        <input type="submit" id="reg" value="Registar" disabled/>
     </form>
+     <script>
+      $(document).ready(function() {
+        $("#btnvalid").click(function() {
+          const words = ["abécula", "abentesma", "achavascado","alimária", "andrajoso", "barregã", "biltre" ,"cacóstomo",
+                         "cuarra","estólido","estroso","estultilóquio" , "nefelibata" ,"néscio", "pechenga","sevandija",
+                         "somítico", "tatibitate" , "xexé" , "cheché" , "xexelento"];
+          const comentario = $("#comentario").val().toLowerCase();;
+
+          for (const word of words) {
+            if (comentario.includes(word)) {
+              $("#comentario").val("");
+              $("#reg").prop("disabled", true);
+              $("#info").html("Comentário inválido!");
+              return;
+            }
+          }
+          $("#info").html("Comentário válido!");
+          $("#reg").prop("disabled", false);
+        });
+      });
+    </script>
 
 </body>
 </html>
