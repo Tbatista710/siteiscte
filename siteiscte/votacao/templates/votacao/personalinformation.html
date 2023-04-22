@@ -12,22 +12,26 @@
         <h1> Informação Pessoal </h1>
     {% endblock %}
 
+    <section id="detailsimage">
     {% block content %}
+    {% if request.user.aluno.imagem %}
+    <img alt="Imagem de Perfil" class="detailimage" src="/static/media/{{request.user.aluno.imagem}}" ><br>
+    {% else %}
+    <img alt="Imagem de Perfil" class="detailimage" src="{% static 'media/default_image.png' %}"><br>
+    {% endif %}
+    </section>
+
+    <section id="details" class="hide">
     <h2> Username <p>{{request.user.username}}</p> </h2>
     <h2> Email <p>{{request.user.email}}</p> </h2>
     {% if not request.user.is_superuser %}
     <h2> Curso <p>{{request.user.aluno.curso}}</p> </h2>
     <h2> Grupo <p>{{request.user.aluno.grupo}}</p> </h2>
     {% endif %}
-
-    {% if request.user.aluno.imagem %}
-    <img class="detailimage" src="/static/media/{{request.user.aluno.imagem}}"><br>
-    {% else %}
-    <img class="detailimage" src="{% static 'media/default_image.png' %}"><br>
-    {% endif %}
+    </section>
 
     {% if request.user.aluno %}
-    <form action="{% url 'votacao:fazer_upload' %}" method="post">
+    <form action="{% url 'votacao:fazer_upload' %}" method="post" id="alterar" >
         {% csrf_token %}
         <button type="submit" value="Alterar Imagem">
             Alterar Imagem
@@ -35,5 +39,17 @@
     </form><br><br>
     {% endif %}
     {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+    $("#detailsimage").hover(function (){
+        $("#details").show();
+        console.log("aaaaa");
+    }, function() {
+        $("#details").hide();
+    });
+});
+    </script>
 </body>
 </html>
