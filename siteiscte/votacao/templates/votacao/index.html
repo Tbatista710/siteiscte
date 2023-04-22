@@ -45,12 +45,17 @@
 
     {% block title %}
     <h1> Questões para votar </h1>
+    <section class="ulsection">
+        <button id="ListButton"> Show List </button>
+    </section>
     {% endblock %}
 
     {% block content %}
+
     <section class="ulsection">
+
          {% if latest_question_list %}
-    <ul>
+    <ul id="lista" class="hide">
      {% for questao in latest_question_list %}
         <li>
         <a href= "{% url 'votacao:detalhe' questao.id %}">
@@ -59,6 +64,7 @@
         </li>
         {% endfor %}
         </ul>
+        <br>
     {% endif %}
 
     {% if request.user.is_superuser%}
@@ -69,8 +75,28 @@
         </button>
     </form><br><br>
     {% endif %}
-    {% endblock %}
     </section>
+    {% endblock %}
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $('#ListButton').on('click', function(event){
+            var $this = $(this);
+            $this.toggleClass('show');
+            if($this.hasClass('show')){
+                $this.text("Hide List");
+                $('#lista').slideDown();
+            } else {
+                $this.text("Show List");
+                $('#lista').slideUp();
+            }
+        });
+    </script>
+
+
+
 </body>
 
 

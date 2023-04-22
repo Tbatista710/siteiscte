@@ -126,6 +126,15 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
     text-align:center;
 }
 
+#ListButton {
+    text-align: center;
+}
 
+.hide{
+  display:none;
+}
 
+#details {
+    display: none;
+}
 
