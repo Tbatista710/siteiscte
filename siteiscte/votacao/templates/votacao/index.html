@@ -4,6 +4,8 @@
     </title>
     {% load static %}
     <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 </head>
 <body>
     <header class="row">
@@ -20,7 +22,7 @@
         <section class="column">
             <h1 class="headertext">
 
-                {{request.user.username}}
+                <a id="user"> {{request.user.username}} </a>
 
                 {% if request.user.aluno.imagem %}
                 <img class="headerimage" src="/static/media/{{request.user.aluno.imagem}}">
@@ -28,16 +30,30 @@
                 <img class="headerimage" src="{% static 'media/default_image.png' %}">
                 {% endif %}
 
+                <script>
+                    $(document).ready(function() {
+                    $(".headerimage").dblclick(function() {
+                    $(".headerimage").hide();
+                    });
+                    });
+                    $(document).ready(function() {
+                    $("#user").click(function() {
+                    $(".headerimage").show();
+                    });
+                    });
+                </script>
+
                 {% if not request.user.is_superuser %}
                 <br>Nº de votos = {{request.user.aluno.votos}}
                 {% endif %}
 
                 <form action="{% url 'votacao:logoutview'%}" method="post">
-                {% csrf_token %}
-                <button type="submit" value="logout">
-                    Log Out
-                </button>
-            </form>
+                    {% csrf_token %}
+                    <button type="submit" value="logout">
+                        Log Out
+                    </button>
+                </form>
+
             </h1>
         </section>
         {% endblock %}
@@ -51,20 +67,17 @@
     {% endblock %}
 
     {% block content %}
-
     <section class="ulsection">
-
-         {% if latest_question_list %}
-    <ul id="lista" class="hide">
-     {% for questao in latest_question_list %}
-        <li>
-        <a href= "{% url 'votacao:detalhe' questao.id %}">
-            {{ questao.questao_texto }}
-        </a>
-        </li>
-        {% endfor %}
-        </ul>
-        <br>
+        {% if latest_question_list %}
+            <ul id="lista" class="hide">
+                {% for questao in latest_question_list %}
+                <li>
+                    <a href= "{% url 'votacao:detalhe' questao.id %}">
+                    {{ questao.questao_texto }}
+                    </a>
+                 </li>
+                {% endfor %}
+            </ul><br>
     {% endif %}
 
     {% if request.user.is_superuser%}
@@ -78,9 +91,6 @@
     </section>
     {% endblock %}
 
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
         $('#ListButton').on('click', function(event){
             var $this = $(this);
@@ -94,8 +104,6 @@
             }
         });
     </script>
-
-
 
 </body>
 

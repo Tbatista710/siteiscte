@@ -6,6 +6,7 @@
     {% extends "votacao/index.html" %}
     {% load static %}
     <link rel="stylesheet" , href="{% static 'votacao/css/main.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
     {% block title %}
@@ -21,15 +22,6 @@
     {% endif %}
     </section>
 
-    <section id="details" class="hide">
-    <h2> Username <p>{{request.user.username}}</p> </h2>
-    <h2> Email <p>{{request.user.email}}</p> </h2>
-    {% if not request.user.is_superuser %}
-    <h2> Curso <p>{{request.user.aluno.curso}}</p> </h2>
-    <h2> Grupo <p>{{request.user.aluno.grupo}}</p> </h2>
-    {% endif %}
-    </section>
-
     {% if request.user.aluno %}
     <form action="{% url 'votacao:fazer_upload' %}" method="post" id="alterar" >
         {% csrf_token %}
@@ -38,18 +30,26 @@
         </button>
     </form><br><br>
     {% endif %}
+
+    <section id="details">
+    <h2> Username <p>{{request.user.username}}</p> </h2>
+    <h2> Email <p>{{request.user.email}}</p> </h2>
+    {% if not request.user.is_superuser %}
+    <h2> Curso <p>{{request.user.aluno.curso}}</p> </h2>
+    <h2> Grupo <p>{{request.user.aluno.grupo}}</p> </h2>
+    {% endif %}
+    </section>
+    <script>
+      $(document).ready(function() {
+        $("#details").hide();
+        $(".detailimage").hover(function() {
+        $("#details").show();
+        }, function() {
+        $("#details").hide();
+        });
+        });
+    </script>
     {% endblock %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-    $("#detailsimage").hover(function (){
-        $("#details").show();
-        console.log("aaaaa");
-    }, function() {
-        $("#details").hide();
-    });
-});
-    </script>
 </body>
 </html>
